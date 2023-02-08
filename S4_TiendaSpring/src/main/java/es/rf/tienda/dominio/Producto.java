@@ -1,7 +1,6 @@
 package es.rf.tienda.dominio;
 
 import java.time.LocalDate;
-
 import java.util.List;
 
 import es.rf.tienda.exception.DomainException;
@@ -48,16 +47,20 @@ public class Producto {
 	public Producto() {
 		super();
 	}
-	
+
 	/**
-	 * Getters y setters +  métodos Validators
+	 * Getter codigo producto
 	 * @return
 	 */
-
 	public String getId_producto() {
 		return id_producto;
 	}
 
+	/**
+	 * Setter codigo producto
+	 * @param id_producto
+	 * @throws DomainException
+	 */
 	public void setId_producto(String id_producto) throws DomainException {
 		if(Validator.filtroProducto(id_producto) && Validator.cumpleLongitud(id_producto, CUMPLEMIN_5, CUMPLEMIN_5)) {
 			this.id_producto = id_producto;
@@ -66,10 +69,19 @@ public class Producto {
 		}
 	}
 
+	/**
+	 * Getter descripcion corta
+	 * @return
+	 */
 	public String getPro_descripcion() {
 		return pro_descripcion;
 	}
 
+	/**
+	 * Setter descripcion corta
+	 * @param pro_descripcion
+	 * @throws DomainException
+	 */
 	public void setPro_descripcion(String pro_descripcion) throws DomainException {
 		if(Validator.cumpleLongitud(pro_descripcion, CUMPLEMIN_5, CUMPLEMAX_100)) { 
 			this.pro_descripcion = pro_descripcion;
@@ -78,10 +90,19 @@ public class Producto {
 		}
 	}
 
+	/**
+	 * Getter explicación
+	 * @return
+	 */
 	public String getPro_desLarga() {
 		return pro_desLarga;
 	}
 
+	/**
+	 * Setter explicación
+	 * @param pro_desLarga
+	 * @throws DomainException
+	 */
 	public void setPro_desLarga(String pro_desLarga) throws DomainException {
 		if(Validator.cumpleLongitud(pro_desLarga, CUMPLEMIN_5, CUMPLEMAX_2000)) {
 			this.pro_desLarga = pro_desLarga;
@@ -90,10 +111,19 @@ public class Producto {
 		}
 	}
 
+	/**
+	 * Getter precio
+	 * @return
+	 */
 	public double getPro_precio() {
 		return pro_precio;
 	}
 
+	/**
+	 * Setter precio
+	 * @param pro_precio
+	 * @throws DomainException
+	 */
 	public void setPro_precio(double pro_precio) throws DomainException {
 		if(Validator.cumpleRango(pro_precio, CUMPLEMIN_0, CUMPLEMAX_100)) {
 			this.pro_precio = pro_precio;
@@ -102,18 +132,35 @@ public class Producto {
 		}
 	}
 
+	/**
+	 * Getter stock
+	 * @return
+	 */
 	public int getPro_stock() {
 		return pro_stock;
 	}
 
+	/**
+	 * Setter stock
+	 * @param pro_stock
+	 */
 	public void setPro_stock(int pro_stock) {
 		this.pro_stock = pro_stock;
 	}
 
+	/**
+	 * Getter fecha prevista reposicion
+	 * @return
+	 */
 	public LocalDate getPro_fecRepos() {
 		return pro_fecRepos;
 	}
 
+	/**
+	 * Setter fecha prevista reposicion
+	 * @param pro_fecRepos
+	 * @throws DomainException
+	 */
 	public void setPro_fecRepos(LocalDate pro_fecRepos) throws DomainException {
 		if(Validator.valDateMax(pro_fecRepos, LocalDate.now())){
 			this.pro_fecRepos = pro_fecRepos;
@@ -122,10 +169,19 @@ public class Producto {
 		}
 	}
 
+	/**
+	 * Getter fecha activacion
+	 * @return
+	 */
 	public LocalDate getPro_fecActi() {
 		return pro_fecActi;
 	}
 
+	/**
+	 * Setter fecha activacion
+	 * @param pro_fecActi
+	 * @throws DomainException
+	 */
 	public void setPro_fecActi(LocalDate pro_fecActi) throws DomainException {
 		if(Validator.valDateMax(pro_fecRepos, LocalDate.now())){
 			this.pro_fecActi = pro_fecActi;
@@ -134,10 +190,19 @@ public class Producto {
 		}
 	}
 
+	/**
+	 * Getter fecha desactivación
+	 * @return
+	 */
 	public LocalDate getPro_FecDesacti() {
 		return pro_fecDesacti;
 	}
 
+	/**
+	 * Setter fecha desactivación
+	 * @param pro_fecDesacti
+	 * @throws DomainException
+	 */
 	public void setPro_FecDesacti(LocalDate pro_fecDesacti) throws DomainException { //revisar
 		if(getPro_fecActi() != null) {
 			Validator.valDateMax(pro_fecDesacti, pro_fecActi);
@@ -150,10 +215,19 @@ public class Producto {
 		
 	}
 
+	/**
+	 * Getter unidad de venta
+	 * @return
+	 */
 	public String getPro_uniVenta() {
 		return pro_uniVenta;
 	}
 
+	/**
+	 * Setter unidad de venta
+	 * @param pro_uniVenta
+	 * @throws DomainException
+	 */
 	public void setPro_uniVenta(String pro_uniVenta) throws DomainException {
 		if(Validator.isAlfanumeric(pro_uniVenta) && Validator.cumpleLongitud(pro_uniVenta, CUMPLEMIN_1, CUMPLEMIN_10)) {
 			this.pro_uniVenta = pro_uniVenta;
@@ -162,76 +236,151 @@ public class Producto {
 		}
 	}
 
+	/**
+	 * Getter cantidad de unidades ultimas
+	 * @return
+	 */
 	public double getPro_cantXUniVenta() {
 		return pro_cantXUniVenta;
 	}
 
+	/**
+	 * Setter cantidad de unidades ultimas
+	 * @param pro_cantXUniVenta
+	 */
 	public void setPro_cantXUniVenta(double pro_cantXUniVenta) {
 		this.pro_cantXUniVenta = pro_cantXUniVenta;
 	}
 
+	/**
+	 * Getter unidad ultima
+	 * @return
+	 */
 	public String getPro_uniUltNivel() {
 		return pro_uniUltNivel;
 	}
 
+	/**
+	 * Setter unidad ultima
+	 * @param pro_uniUltNivel
+	 */
 	public void setPro_uniUltNivel(String pro_uniUltNivel) {
 		this.pro_uniUltNivel = pro_uniUltNivel;
 	}
 
+	/**
+	 * Getter pais de origen
+	 * @return
+	 */
 	public int getId_pais() { 
 		return id_pais;
 	}
 
-	public void setId_pais(int id_pais) { // Existencia en lista paises (Base de datos)
+	/**
+	 * Setter pais de origen
+	 * @param id_pais
+	 */
+	public void setId_pais(int id_pais) {
 		this.id_pais = id_pais;
 	}
 
+	/**
+	 * Getter uso recomendado
+	 * @return
+	 */
 	public String getPro_usoRecomendado() {
 		return pro_usoRecomendado;
 	}
 
+	/**
+	 * Setter uso recomendado
+	 * @param pro_usoRecomendado
+	 */
 	public void setPro_usoRecomendado(String pro_usoRecomendado) {
 		this.pro_usoRecomendado = pro_usoRecomendado;
 	}
 
+	/**
+	 * Getter categoria
+	 * @return
+	 */
 	public int getId_categoria() {
 		return id_categoria;
 	}
 
+	/**
+	 * Setter categoria
+	 * @param id_categoria
+	 */
 	public void setId_categoria(int id_categoria) { // Existencia en lista paises (Base de datos)
 		this.id_categoria = id_categoria;
 	}
 
+	/**
+	 * Getter stock reservado
+	 * @return
+	 */
 	public int getPro_stkReservado() {
 		return pro_stkReservado;
 	}
 
+	/**
+	 * Setter stock reservado
+	 * @param pro_stkReservado
+	 */
 	public void setPro_stkReservado(int pro_stkReservado) {
 		this.pro_stkReservado = pro_stkReservado;
 	}
 
+	/**
+	 * Getter stock para nivel alto
+	 * @return
+	 */
 	public int getPro_nStkAlto() {
 		return pro_nStkAlto;
 	}
 
+	/**
+	 * Setter stock para nivel alto
+	 * @param pro_nStkAlto
+	 */
 	public void setPro_nStkAlto(int pro_nStkAlto) {
 		this.pro_nStkAlto = pro_nStkAlto;
 	}
 
+	/**
+	 * Getter stock para nivel bajo
+	 * @return
+	 */
 	public int getPro_nStkBajo() {
 		return pro_nStkBajo;
 	}
 
+	/**
+	 * Setter stock para nivel bajo
+	 * @param pro_nStkBajo
+	 */
 	public void setPro_nStkBajo(int pro_nStkBajo) {
 		this.pro_nStkBajo = pro_nStkBajo;
 	}
 
+	/**
+	 * getter de pro_stat
+	 * @return
+	 */
 	public char getPro_stat() {
 		return pro_stat;
 	}
 
-	public void setPro_stat(char pro_stat) { // Rando Base de datos A o B
+	/**
+	 * Setter para pro_stat
+	 * @param pro_stat
+	 * @throws DomainException
+	 */
+	public void setPro_stat(char pro_stat) throws DomainException { 
+	if(Validator.cumpleRango(pro_stat, CUMPLEMIN_1, CUMPLEMIN_1) && (pro_stat == 'A' || pro_stat == 'B')) {
 		this.pro_stat = pro_stat;
+		}else throw new DomainException("El estado ha de ser A - alta o B - baja");
 	}
 
 	@Override

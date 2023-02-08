@@ -28,7 +28,7 @@ public class CategoriaController {
 		}
 //		return cDao.findById(id).get();
 	}
-	
+	//isvalid insert y isvalid update que se tendrian que hacer en un daoo service
 	@PostMapping
 	public String[] alta(@RequestBody Categoria c) {
 		c.setId_categoria(0);
@@ -38,6 +38,13 @@ public class CategoriaController {
 		}else {
 			return new String[] {"500", "Registro no valido"};
 		}
+	}
+	
+	
+	@PutMapping
+	public String[] modificacion(@RequestBody Categoria c) {
+		cDao.save(c);
+		return new String[] {"200", "Modificacion correcta"};
 	}
 	
 	@GetMapping

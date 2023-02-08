@@ -15,8 +15,9 @@ public class Usuario {
 	private String user_dni;					//DNI
 	private LocalDate user_fecAlta;				//FechaAlta
 	private LocalDate user_fecConfirmacion;		//FechaConfirmacion
-	private Direccion user_pago; //REVISAR		//Datos de pago
-	private Direccion user_envio; //REVISAR		//Datos de envio
+	
+	final static int CUMPLEMIN_5 = 5;
+	final static int CUMPLEMAX_100 = 100;
 	
 	/**
 	 * Constructor
@@ -27,29 +28,52 @@ public class Usuario {
 	}
 
 	/**
-	 * getters y setters
+	 * Getter de ID
+	 * @return
 	 */
-
 	public int getId_usuario() {
 		return id_usuario;
 	}
 
+	/**
+	 * Setter de id
+	 * @param id_usuario
+	 */
 	public void setId_usuario(int id_usuario) {
 		this.id_usuario = id_usuario;
 	}
 
+	/**
+	 * Getter de nombre
+	 * @return
+	 */
 	public String getUser_nombre() {
 		return user_nombre;
 	}
 
+	/**
+	 * Setter de nombre
+	 * @param user_nombre
+	 */
 	public void setUser_nombre(String user_nombre) {
-		this.user_nombre = user_nombre;
+		if(Validator.cumpleLongitud(user_nombre, CUMPLEMIN_5, CUMPLEMAX_100)) {
+			this.user_nombre = user_nombre;
+		}
 	}
 
+	/**
+	 * Getter correo electronico
+	 * @return
+	 */
 	public String getUser_email() {
 		return user_email;
 	}
 
+	/**
+	 * Setter correo electronico
+	 * @param user_email
+	 * @throws DomainException
+	 */
 	public void setUser_email(String user_email) throws DomainException {
 		if(Validator.isEmailValido(user_email)) {
 			this.user_email = user_email;
@@ -58,30 +82,56 @@ public class Usuario {
 		}
 	}
 
+	/**
+	 * Getter contraseña
+	 * @return
+	 */
 	public String getUser_pass() {
 		return user_pass;
 	}
 
+	/**
+	 * Setter contraseña
+	 * @param user_pass
+	 * @throws DomainException
+	 */
 	public void setUser_pass(String user_pass) throws DomainException {
 		if(Validator.esPasswordValida(user_pass)) {
 			this.user_pass = user_pass;
 		}else {
-            throw new DomainException("La contraseña no es valida");
+            throw new DomainException("La contraseña no es valida, como mínimo 1 número, 1 letra y 1 carácter especial");
 		}
 	}
 
+	/**
+	 * Getter tipo de usuario
+	 * @return
+	 */
 	public int getId_tipo() {
 		return id_tipo;
 	}
 
+	/**
+	 * Setter de tipo de usuario
+	 * @param id_tipo
+	 */
 	public void setId_tipo(int id_tipo) {
 		this.id_tipo = id_tipo;
 	}
 
+	/**
+	 * Getter de dni
+	 * @return
+	 */
 	public String getUser_dni() {
 		return user_dni;
 	}
 
+	/**
+	 * Setter de dni
+	 * @param user_dni
+	 * @throws DomainException
+	 */
 	public void setUser_dni(String user_dni) throws DomainException {
 		if(Validator.cumpleDNI(user_dni)) {
 			this.user_dni = user_dni;
@@ -90,10 +140,19 @@ public class Usuario {
 		}
 	}
 
+	/**
+	 * Get user fecha alta
+	 * @return
+	 */
 	public LocalDate getUser_fecAlta() {
 		return user_fecAlta;
 	}
 
+	/**
+	 * Setter usa fecha alta
+	 * @param user_fecAlta
+	 * @throws DomainException
+	 */
 	public void setUser_fecAlta(LocalDate user_fecAlta) throws DomainException {
 		if(Validator.valDateMax(user_fecAlta, LocalDate.now())) {
 			this.user_fecAlta = user_fecAlta;
@@ -102,10 +161,19 @@ public class Usuario {
 		}
 	}
 
+	/**
+	 * Getter Fecha confirmación
+	 * @return
+	 */
 	public LocalDate getUser_fecConfirmacion() {
 		return user_fecConfirmacion;
 	}
 
+	/**
+	 * Setter fecha confirmación
+	 * @param user_fecConfirmacion
+	 * @throws DomainException
+	 */
 	public void setUser_fecConfirmacion(LocalDate user_fecConfirmacion) throws DomainException {
 		if(Validator.valDateMax(user_fecConfirmacion, LocalDate.now())) {
 			this.user_fecConfirmacion = user_fecConfirmacion;
@@ -113,26 +181,5 @@ public class Usuario {
             throw new DomainException("La fecha no es correcta");
 		}
 	}
-
-	public Direccion getUser_pago() {
-		return user_pago;
-	}
-
-	public void setUser_pago(Direccion user_pago) {
-		this.user_pago = user_pago;
-	}
-
-	public Direccion getUser_envio() {
-		return user_envio;
-	}
-
-	public void setUser_envio(Direccion user_envio) {
-		this.user_envio = user_envio;
-	}
-
-	
-	
-	
-	
 	
 }
