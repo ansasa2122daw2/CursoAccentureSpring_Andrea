@@ -17,11 +17,6 @@ public class CategoriaController {
 	@Autowired
 	private ICategoriaRepo cDao;
 	
-//	private es.rf.tienda.objetos.repository.ICategoriaRepo cDao;
-//	
-//	public void ICategoriaRepo(ICategoriaRepo cDao) {
-//		this.cDao = cDao;
-//	}
 	
 	@GetMapping("/{id}")
 	public String[] leerUno(@PathVariable("id") int id) {

@@ -10,11 +10,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 //@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
 //@SpringBootApplication(scanBasePackages= {"es.rf.tienda"},exclude = {DataSourceAutoConfiguration.class})
-//@ComponentScan("es.rf.tienda")
-//@EnableJpaRepositories("es.rf.tienda.dao")
-//@Configuration
-//@EnableJpaRepositories(basePackages = "es.rf.tienda.dao")
-@SpringBootApplication(scanBasePackages = "es.rf.tienda")
+@SpringBootApplication(scanBasePackages= ("es.rf.tienda"))
 public class TiendaSpring13Application {
 
 	public static void main(String[] args) {
