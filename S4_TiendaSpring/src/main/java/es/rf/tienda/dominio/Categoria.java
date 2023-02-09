@@ -1,6 +1,7 @@
 package es.rf.tienda.dominio;
 
 import es.rf.tienda.exception.DomainException;
+
 import es.rf.tienda.util.Validator;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -13,10 +14,10 @@ import jakarta.persistence.Transient;
 
 @Entity
 @Table(schema = "ALUMNO_ASS", name="CATEGORIAS")
-public class Categoria {
+public class Categoria implements Modelo{
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.TABLE)
 	private int id_categoria;			//identificador categoria
 	
 	@Column(nullable=false)
@@ -32,11 +33,11 @@ public class Categoria {
 	
 	public Categoria(){}
 	
-	@Transient
-	public boolean isValid(){	
-		return !Validator.isVacio(cat_nombre) &&
-				id_categoria > 0;
-	}
+//	@Transient
+//	public boolean isValid(){	
+//		return !Validator.isVacio(cat_nombre) &&
+//				id_categoria > 0;
+//	}
 	
 	/**
 	 * Getter para identificador de categoria
@@ -68,10 +69,10 @@ public class Categoria {
 	 * 
 	 */
 	public void setCat_nombre(String cat_nombre) throws DomainException {
-		if(Validator.isAlfanumeric(cat_nombre) && Validator.cumpleLongitud(cat_nombre, CUMPLE_5, CUMPLE_50)) {
+		if(Validator.cumpleLongitud(cat_nombre, CUMPLE_5, CUMPLE_50)) {
 			this.cat_nombre = cat_nombre;
 		}else {
-            throw new DomainException("Error no es alfanumerico o no cumple la longitud mínima de 5 y máxima de 50");
+            throw new DomainException("Error no cumple la longitud mínima de 5 y máxima de 50");
 		}
 		
 	}
@@ -138,6 +139,21 @@ public class Categoria {
 	public String toString() {
 		return "Categoria [id_categoria=" + id_categoria + ", cat_nombre=" + cat_nombre + ", cat_descripcion="
 				+ cat_descripcion + "]";
+	}
+
+	@Transient
+	@Override
+	public boolean isValidInsert() {
+		boolean result = !Validator.isVacio(cat_nombre);
+		return result;
+	}
+
+	@Transient
+	@Override
+	public boolean isValidUpdate() {
+		boolean result = !Validator.isVacio(cat_nombre) &&
+				id_categoria > 0;
+		return result;
 	}
 	
 	

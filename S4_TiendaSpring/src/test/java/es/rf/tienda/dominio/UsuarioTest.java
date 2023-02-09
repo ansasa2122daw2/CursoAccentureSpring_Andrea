@@ -22,7 +22,7 @@ class UsuarioTest {
 	}
 
 	@Test
-	void testGetUser_nombre() {
+	void testGetUser_nombre() throws DomainException {
 		usu.setUser_nombre(userN);
 		assertEquals(userN, usu.getUser_nombre());
 	}
@@ -34,37 +34,5 @@ class UsuarioTest {
 			usu.getUser_nombre();
 		});
 	}
-
-	@Test
-	void testGetUser_email() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testGetUser_pass() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testGetId_tipo() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testGetUser_dni() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testGetUser_fecAlta() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testGetUser_fecConfirmacion() {
-		fail("Not yet implemented");
-	}
-
-
 
 }

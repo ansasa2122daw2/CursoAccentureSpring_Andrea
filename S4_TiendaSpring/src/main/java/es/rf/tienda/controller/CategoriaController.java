@@ -2,6 +2,7 @@ package es.rf.tienda.controller;
 
 import java.util.List;
 
+
 import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,31 +10,32 @@ import org.springframework.web.bind.annotation.*;
 
 import es.rf.tienda.dao.ICategoriaRepo;
 import es.rf.tienda.dominio.Categoria;
+import es.rf.tienda.exception.DAOException;
+import es.rf.tienda.service.IServicioCategoria;
 
 @RestController
 @RequestMapping("/categorias")
 public class CategoriaController {
 	
 	@Autowired
-	private ICategoriaRepo cDao;
+	private IServicioCategoria cDao;
 	
 	
 	@GetMapping("/{id}")
 	public String[] leerUno(@PathVariable("id") int id) {
 		try {
-			Categoria c = cDao.findById(id).get();
+			Categoria c = cDao.leerUno(id);
 			return new String[] {"200",c.toString()};
 		}catch (NoSuchElementException e) {
 			return new String[] {"400", "No existe registro solicitado"};
 		}
-//		return cDao.findById(id).get();
 	}
-	//isvalid insert y isvalid update que se tendrian que hacer en un daoo service
+
 	@PostMapping
-	public String[] alta(@RequestBody Categoria c) {
+	public String[] alta(@RequestBody Categoria c) throws DAOException {
 		c.setId_categoria(0);
-		if (c.isValid()) {
-			cDao.save(c);
+		if (c.isValidInsert()) {
+			cDao.insert(c);
 			return new String[] {"200", "Registro salvado"};
 		}else {
 			return new String[] {"500", "Registro no valido"};
@@ -42,14 +44,18 @@ public class CategoriaController {
 	
 	
 	@PutMapping
-	public String[] modificacion(@RequestBody Categoria c) {
-		cDao.save(c);
-		return new String[] {"200", "Modificacion correcta"};
+	public String[] modificacion(@RequestBody Categoria c) throws DAOException {
+		if (c.isValidUpdate()) {
+			cDao.update(c);
+			return new String[] {"200", "Registro salvado"};
+		}else {
+			return new String[] {"500", "Registro no valido"};
+		}
 	}
 	
 	@GetMapping
 	public List<Categoria> leerTodos(){
-		return cDao.findAll();
+		return cDao.listAll();
 	}
 	
 	@DeleteMapping("/{id}")

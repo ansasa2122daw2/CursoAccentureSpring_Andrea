@@ -3,17 +3,29 @@ package es.rf.tienda.dominio;
 import java.time.LocalDate;
 import java.util.List;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import es.rf.tienda.exception.DomainException;
 import es.rf.tienda.util.Validator;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
+@Entity
+@Table(schema = "ALUMNO_ASS", name="USUARIOS")
 public class Usuario {
+	@Id
 	private int id_usuario;						//id
 	private String user_nombre;					//Nombre
 	private String user_email;					//Correo electronico
 	private String user_pass;					//Contraseña
-	private int id_tipo; //REVISAR				//Tipo de usuario
+	private int id_tipo;						//Tipo de usuario
 	private String user_dni;					//DNI
+	@DateTimeFormat(pattern="dd-MM-yyyy")
 	private LocalDate user_fecAlta;				//FechaAlta
+	@DateTimeFormat(pattern="dd-MM-yyyy")
 	private LocalDate user_fecConfirmacion;		//FechaConfirmacion
 	
 	final static int CUMPLEMIN_5 = 5;
@@ -54,10 +66,13 @@ public class Usuario {
 	/**
 	 * Setter de nombre
 	 * @param user_nombre
+	 * @throws DomainException 
 	 */
-	public void setUser_nombre(String user_nombre) {
+	public void setUser_nombre(String user_nombre) throws DomainException {
 		if(Validator.cumpleLongitud(user_nombre, CUMPLEMIN_5, CUMPLEMAX_100)) {
 			this.user_nombre = user_nombre;
+		}else{
+			throw new DomainException("El nombre de usuario ha de ser minimo 5 carácteres y máximo 100");
 		}
 	}
 

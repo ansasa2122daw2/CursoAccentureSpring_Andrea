@@ -5,6 +5,10 @@ import java.util.List;
 
 import es.rf.tienda.exception.DomainException;
 import es.rf.tienda.util.Validator;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 /**
  * Nombre: Producto
@@ -14,7 +18,9 @@ import es.rf.tienda.util.Validator;
  */
 
 public class Producto {
+
 	private String id_producto;				//código del producto
+
 	private String pro_descripcion;			//descripcion corta
 	private String pro_desLarga;			//explicacion
 	private double pro_precio;				//precio

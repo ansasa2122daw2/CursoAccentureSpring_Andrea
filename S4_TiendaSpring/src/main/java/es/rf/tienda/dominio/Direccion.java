@@ -1,7 +1,8 @@
 package es.rf.tienda.dominio;
 
-import es.rf.tienda.exception.DomainException;
-import es.rf.tienda.util.Validator;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 /**
  * Nombre: Direccion
@@ -9,7 +10,8 @@ import es.rf.tienda.util.Validator;
  * @author andrea.sanclemente
  *
  */
-
+@Entity
+@Table(schema = "ALUMNO_ASS", name="DIRECCIONES")
 public class Direccion {
 	private String dir_nombre;		//Nombre
 	private String dir_direccion;	//Direccion
@@ -17,6 +19,7 @@ public class Direccion {
 	private String cPostal;			//Codigo postal
 	private String dir_provincia;	//Provincia
 	private String dir_pais;		//Pais
+	@Id
 	private String dir_correoE;		//Correo electronico
 	
 	/**
