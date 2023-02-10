@@ -97,12 +97,22 @@ class CategoriaControllerTest {
 
 	@Test
 	void testAlta() {
-		fail("Not yet implemented");
+		Categoria cat1 = new Categoria(IDC,CNOMBRE,CDESC);
+		Mensaje mensaje = new Mensaje(COERR, MENERR);
+		
+		when(cCat.alta(cat1)).thenReturn(mensaje);
+		Mensaje men = cCat.alta(cat1);
+		assertEquals(men,cat1);
 	}
 
 	@Test
 	void testModificacion() {
-		fail("Not yet implemented");
+		Categoria cat1 = new Categoria(IDC,CNOMBRE,CDESC);
+		Mensaje mensaje = new Mensaje(COERR, MENERR);
+		
+		when(cCat.modificacion(cat1)).thenReturn(mensaje);
+		Mensaje men = cCat.modificacion(cat1);
+		assertEquals(men,cat1);
 	}
 
 }
