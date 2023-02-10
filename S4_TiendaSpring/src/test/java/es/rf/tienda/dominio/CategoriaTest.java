@@ -11,11 +11,11 @@ import es.rf.tienda.dominio.Categoria;
 import es.rf.tienda.exception.DomainException;
 
 class CategoriaTest {
-	private String descr = "Contador de caracteres tengo que llegar a doscientos para que salga error y poder verificar que el Test y la clase dominio está bien. Este es el texto de test por el cual estoy intentando alargar.";
-	private String descrERR = "Contador de caracteres tengo que llegar a doscientos para que salga error y poder verificar que el Test y la clase dominio está bien si no, no podré comprobarlo. Este es el texto de test por el cual estoy intentando alargar.";
+	private static final String descr = "Contador de caracteres tengo que llegar a doscientos para que salga error y poder verificar que el Test y la clase dominio está bien. Este es el texto de test por el cual estoy intentando alargar.";
+	private static final String descrERR = "Contador de caracteres tengo que llegar a doscientos para que salga error y poder verificar que el Test y la clase dominio está bien si no, no podré comprobarlo. Este es el texto de test por el cual estoy intentando alargar.";
 	
-	private String nombreOK = "Andrea";
-	private String nombreFAIL = "Al";
+	private static final String nombreOK = "Andrea";
+	private static final String nombreFAIL = "Al";
 	
 	Categoria cat;
 

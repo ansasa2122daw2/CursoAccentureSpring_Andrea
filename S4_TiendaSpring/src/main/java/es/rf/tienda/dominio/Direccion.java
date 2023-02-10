@@ -1,5 +1,8 @@
 package es.rf.tienda.dominio;
 
+
+import jakarta.persistence.Embeddable;
+import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -10,13 +13,14 @@ import jakarta.persistence.Table;
  * @author andrea.sanclemente
  *
  */
+//@Embeddable
 @Entity
 @Table(schema = "ALUMNO_ASS", name="DIRECCIONES")
 public class Direccion {
 	private String dir_nombre;		//Nombre
 	private String dir_direccion;	//Direccion
 	private String dir_poblacion;	//Poblacion
-	private String cPostal;			//Codigo postal
+	private String dir_cPostal;			//Codigo postal
 	private String dir_provincia;	//Provincia
 	private String dir_pais;		//Pais
 	@Id
@@ -85,16 +89,16 @@ public class Direccion {
 	 * Getter para código postal
 	 * @return
 	 */
-	public String getcPostal() {
-		return cPostal;
+	public String getdir_cPostal() {
+		return dir_cPostal;
 	}
 
 	/**
 	 * Setter para código postal
-	 * @param cPostal
+	 * @param dir_cPostal
 	 */
-	public void setcPostal(String cPostal) {
-		this.cPostal = cPostal;
+	public void setdir_cPostal(String dir_cPostal) {
+		this.dir_cPostal = dir_cPostal;
 		
 	}
 
@@ -152,7 +156,7 @@ public class Direccion {
 	@Override
 	public String toString() {
 		return "Direccion [dir_nombre=" + dir_nombre + ", dir_direccion=" + dir_direccion + ", dir_poblacion="
-				+ dir_poblacion + ", cPostal=" + cPostal + ", dir_provincia=" + dir_provincia + ", dir_pais=" + dir_pais
+				+ dir_poblacion + ", dir_cPostal=" + dir_cPostal + ", dir_provincia=" + dir_provincia + ", dir_pais=" + dir_pais
 				+ ", dir_correoE=" + dir_correoE + "]";
 	}	
 		

@@ -3,11 +3,17 @@ package es.rf.tienda.dominio;
 import es.rf.tienda.exception.DomainException;
 
 import es.rf.tienda.util.Validator;
+import io.micrometer.common.util.StringUtils;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 
@@ -18,12 +24,13 @@ public class Categoria implements Modelo{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.TABLE)
+	//@OneToMany(targetEntity = Producto.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private int id_categoria;			//identificador categoria
 	
 	@Column(nullable=false)
 	private String cat_nombre;			//nombre de la categoria
 	
-	@Column
+	@Column(nullable = true, length = 200)
 	private String cat_descripcion;		//descripcion de la categoria
 	
 	
@@ -32,13 +39,14 @@ public class Categoria implements Modelo{
 	final static int CUMPLE_200 = 200;
 	
 	public Categoria(){}
-	
-//	@Transient
-//	public boolean isValid(){	
-//		return !Validator.isVacio(cat_nombre) &&
-//				id_categoria > 0;
-//	}
-	
+
+	public Categoria(int id_categoria, String cat_nombre, String cat_descripcion) {
+		super();
+		this.id_categoria = id_categoria;
+		this.cat_nombre = cat_nombre;
+		this.cat_descripcion = cat_descripcion;
+	}
+
 	/**
 	 * Getter para identificador de categoria
 	 * @return Integer con el id de la categoria
@@ -52,7 +60,9 @@ public class Categoria implements Modelo{
 	 * 
 	 */
 	public void setId_categoria(int id_categoria) {
-		this.id_categoria = id_categoria;
+		if(isValidInsert() || isValidUpdate()) {
+			this.id_categoria = id_categoria;
+		}
 	}
 	
 	/**
@@ -69,7 +79,7 @@ public class Categoria implements Modelo{
 	 * 
 	 */
 	public void setCat_nombre(String cat_nombre) throws DomainException {
-		if(Validator.cumpleLongitud(cat_nombre, CUMPLE_5, CUMPLE_50)) {
+		if(Validator.cumpleLongitud(cat_nombre, CUMPLE_5, CUMPLE_50) && isValidInsert() || isValidUpdate()) {
 			this.cat_nombre = cat_nombre;
 		}else {
             throw new DomainException("Error no cumple la longitud mínima de 5 y máxima de 50");
@@ -91,11 +101,7 @@ public class Categoria implements Modelo{
 	 * 
 	 */
 	public void setCat_descripcion(String cat_descripcion) throws DomainException {
-		if(Validator.cumpleLongitudMax(cat_descripcion, CUMPLE_200)) {
-			this.cat_descripcion = cat_descripcion;
-		}else {
-            throw new DomainException("No cumple la longitud máxima de 200");
-		}
+		this.cat_descripcion = cat_descripcion==null? null: StringUtils.truncate(cat_descripcion, CUMPLE_200);
 	}
 
 
@@ -141,14 +147,12 @@ public class Categoria implements Modelo{
 				+ cat_descripcion + "]";
 	}
 
-	@Transient
 	@Override
 	public boolean isValidInsert() {
 		boolean result = !Validator.isVacio(cat_nombre);
 		return result;
 	}
 
-	@Transient
 	@Override
 	public boolean isValidUpdate() {
 		boolean result = !Validator.isVacio(cat_nombre) &&

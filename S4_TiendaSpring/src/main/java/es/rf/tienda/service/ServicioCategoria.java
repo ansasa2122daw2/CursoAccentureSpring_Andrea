@@ -9,34 +9,31 @@ import org.springframework.stereotype.Service;
 import es.rf.tienda.dao.ICategoriaRepo;
 import es.rf.tienda.dominio.Categoria;
 import es.rf.tienda.exception.DAOException;
+import es.rf.tienda.exception.DomainException;
 
 /**
  * Servicio de DAO
+ * 
  * @author andrea.sanclemente
  *
  */
 @Service
-public class ServicioCategoria implements IServicioCategoria{
+public class ServicioCategoria implements IServicioCategoria {
 
 	@Autowired
 	private ICategoriaRepo cDao;
 
-	public boolean insert(Categoria t) throws DAOException {
-		if (t.isValidInsert()) {
+	@Override
+	public void insert(Categoria t){
+		if(t.isValidInsert()) {
 			cDao.save(t);
-			return true;
-		}else {
-			throw new DAOException("Error al insertar el valor, no puede ser null");
 		}
 	}
-	
-	public boolean update(Categoria t) throws DAOException {
-		if (t.isValidUpdate()) {
-			cDao.save(t);
-			return true;
-		}else {
-			throw new DAOException("Error al insertar el valor, no puede ser null y id mayor que 0");
-		}
+
+	@Override
+	public boolean update(Categoria t) {
+		cDao.save(t);
+		return true;
 	}
 
 	@Override
@@ -52,12 +49,9 @@ public class ServicioCategoria implements IServicioCategoria{
 
 	@Override
 	public Categoria leerUno(int s) {
-		try {
-			Categoria c = cDao.findById(s).get();
-			return c;
-		}catch(NoSuchElementException e) {
-			return new Categoria();
-		}
+		Categoria c = cDao.findById(s).get();
+		return c;
+
 	}
 
 }

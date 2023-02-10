@@ -3,11 +3,17 @@ package es.rf.tienda.dominio;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import es.rf.tienda.exception.DomainException;
 import es.rf.tienda.util.Validator;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 /**
@@ -16,23 +22,30 @@ import jakarta.persistence.Table;
  * @author andrea.sanclemente
  *
  */
-
+@Entity
+@Table(schema = "ALUMNO_ASS", name="PRODUCTOS")
 public class Producto {
-
+	@Id
 	private String id_producto;				//código del producto
 
 	private String pro_descripcion;			//descripcion corta
 	private String pro_desLarga;			//explicacion
 	private double pro_precio;				//precio
 	private int pro_stock;					//stock
+	@JsonFormat(pattern="dd/MM/yyyy")
 	private LocalDate pro_fecRepos;			//fecha prevista reposicion
+	@JsonFormat(pattern="dd/MM/yyyy")
 	private LocalDate pro_fecActi;			//fecha activacion
+	@JsonFormat(pattern="dd/MM/yyyy")
 	private LocalDate pro_fecDesacti;		//fecha desactivacion
 	private String pro_uniVenta;			//unidad de venta
 	private double pro_cantXUniVenta;		//cantidad de unidades ultimas
 	private String pro_uniUltNivel;			//unidad ultima
+	
 	private int id_pais;					//Pais de origen
 	private String pro_usoRecomendado;		//Uso recomendado
+	//@ManyToOne(targetEntity = Categoria.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	//@JoinColumn(name = "id_categoria") seria poner Categoria id_categoria abajo
 	private int id_categoria;				//Categoria
 	private int pro_stkReservado;			//Stock reservado
 	private int pro_nStkAlto;				//stock para nivel alto

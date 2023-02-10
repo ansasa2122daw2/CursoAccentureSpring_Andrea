@@ -1,6 +1,7 @@
 package es.rf.tienda.dominio;
 
 import java.time.LocalDate;
+
 import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -9,6 +10,11 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import es.rf.tienda.exception.DomainException;
 import es.rf.tienda.util.Validator;
+import jakarta.persistence.AttributeOverride;
+import jakarta.persistence.Column;
+import jakarta.persistence.AttributeOverrides;
+import jakarta.persistence.Embedded;
+import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -23,11 +29,31 @@ public class Usuario {
 	private String user_pass;					//Contraseña
 	private int id_tipo;						//Tipo de usuario
 	private String user_dni;					//DNI
-	@DateTimeFormat(pattern="dd-MM-yyyy")
+	@JsonFormat(pattern="dd/MM/yyyy")
 	private LocalDate user_fecAlta;				//FechaAlta
-	@DateTimeFormat(pattern="dd-MM-yyyy")
+	@JsonFormat(pattern="dd/MM/yyyy")
 	private LocalDate user_fecConfirmacion;		//FechaConfirmacion
 	
+//	@Embedded
+//	@AttributeOverrides({ @AttributeOverride(name = "dir_nombre", column = @Column(name = "nombreFactura")),
+//		@AttributeOverride(name = "dir_direccion", column = @Column(name = "direccionFactura")),
+//		@AttributeOverride(name = "dir_poblacion", column = @Column(name = "poblacionFactura")),
+//		@AttributeOverride(name = "dir_cPostal", column = @Column(name = "cPostalFactura")),
+//		@AttributeOverride(name = "dir_provincia", column = @Column(name = "provinciaFactura")),
+//		@AttributeOverride(name = "dir_pais", column = @Column(name = "paisFactura"))
+//	})
+//	private Direccion user_pago;
+//	
+//	@Embedded
+//	@AttributeOverrides({ @AttributeOverride(name = "dir_nombre", column = @Column(name = "nombreEnvio")),
+//		@AttributeOverride(name = "dir_direccion", column = @Column(name = "direccionEnvio")),
+//		@AttributeOverride(name = "dir_poblacion", column = @Column(name = "poblacionEnvio")),
+//		@AttributeOverride(name = "dir_cPostal", column = @Column(name = "cPostalEnvio")),
+//		@AttributeOverride(name = "dir_provincia", column = @Column(name = "provinciaEnvio")),
+//		@AttributeOverride(name = "dir_pais", column = @Column(name = "paisEnvio"))
+//	})
+//	private Direccion user_envio;
+//	
 	final static int CUMPLEMIN_5 = 5;
 	final static int CUMPLEMAX_100 = 100;
 	
@@ -196,5 +222,21 @@ public class Usuario {
             throw new DomainException("La fecha no es correcta");
 		}
 	}
+
+//	public Direccion getUser_pago() {
+//		return user_pago;
+//	}
+//
+//	public void setUser_pago(Direccion user_pago) {
+//		this.user_pago = user_pago;
+//	}
+//
+//	public Direccion getUser_envio() {
+//		return user_envio;
+//	}
+//
+//	public void setUser_envio(Direccion user_envio) {
+//		this.user_envio = user_envio;
+//	}
 	
 }

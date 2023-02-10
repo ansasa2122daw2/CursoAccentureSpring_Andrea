@@ -1,16 +1,15 @@
 package es.rf.tienda.util;
 
 
-/* *****************************************************
+/** *****************************************************
  * NOMBRE: ErrorMessages.java
  * 
  * DESCRIPCION:  
  * 			Clase con los String que contienen los mensajes de error 
  * 			especificados por las reglas de negocio.
  * 
- *  @version	Enero 2016
  *  
- *  @author 	Miguel Garcia
+ *  @author 	Andrea Sánchez
  *  
  *  *****************************************************/
 public class ErrorMessages {
@@ -28,6 +27,17 @@ public class ErrorMessages {
 	 */
 	public final static String PROERR_003 = "La longitud de ? ha de estar entre ? y ?";
 	
+	/**
+	 * Campo con ID erroneo
+	 */
 	
+	public final static String PROERR_004 = "Número ID erroneo";
+	
+	/**
+	 * Prueba JUnit mockito
+	 */
+	public static final String BORRADO = "SUCCES";
+	
+
 
 }
