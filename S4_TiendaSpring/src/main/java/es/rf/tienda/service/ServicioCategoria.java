@@ -24,8 +24,8 @@ public class ServicioCategoria implements IServicioCategoria {
 	private ICategoriaRepo cDao;
 
 	@Override
-	public void insert(Categoria t){
-		if(t.isValidInsert()) {
+	public void insert(Categoria t) {
+		if (t.isValidInsert()) {
 			cDao.save(t);
 		}
 	}

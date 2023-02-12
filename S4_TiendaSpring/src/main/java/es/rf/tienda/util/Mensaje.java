@@ -1,5 +1,7 @@
 package es.rf.tienda.util;
 
+import java.util.List;
+
 import es.rf.tienda.dominio.Categoria;
 
 /**
@@ -23,7 +25,7 @@ public class Mensaje {
 		this.code = code;
 		this.status = status;
 	}
-	
+
 	public int getcode() {
 		return code;
 	}

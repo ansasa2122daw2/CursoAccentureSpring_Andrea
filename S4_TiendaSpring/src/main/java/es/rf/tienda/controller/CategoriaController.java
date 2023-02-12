@@ -15,6 +15,7 @@ import es.rf.tienda.dominio.Categoria;
 import es.rf.tienda.exception.DAOException;
 import es.rf.tienda.exception.DomainException;
 import es.rf.tienda.service.IServicioCategoria;
+import es.rf.tienda.service.ServicioCategoria;
 import es.rf.tienda.util.ErrorMessages;
 import es.rf.tienda.util.Mensaje;
 
@@ -31,6 +32,9 @@ public class CategoriaController {
 
 	@Autowired
 	private IServicioCategoria cDao;
+
+	@Autowired
+	private ICategoriaRepo sDao;
 
 	/**
 	 * Método getMapping que coje el ID y lee una categoria Excepciones
@@ -66,6 +70,7 @@ public class CategoriaController {
 	 * 
 	 * @param c
 	 * @return
+	 * @throws DAOException
 	 */
 	@PostMapping
 	public Mensaje alta(@RequestBody Categoria c) {
@@ -79,6 +84,8 @@ public class CategoriaController {
 			}
 		} catch (DomainException d) {
 			return new Mensaje(400, d.getMessage());
+		} catch (DAOException e) {
+			return new Mensaje(400, e.getMessage());
 		}
 
 	}
@@ -92,11 +99,11 @@ public class CategoriaController {
 	@PutMapping
 	public Mensaje modificacion(@RequestBody Categoria c) {
 		try {
-			if(c.isValidUpdate()) {
+			if(c.isValidUpdate() && sDao.existsById(c.getId_categoria())) {
 				cDao.update(c);
 				return new Mensaje(200, "Registro modificado");
 			}else {
-				return new Mensaje(400, "Registro no válido, " + ErrorMessages.PROERR_002);
+				return new Mensaje(400, "Registro no válido, " + ErrorMessages.PROERR_004);
 			}
 		} catch (DomainException d) {
 			return new Mensaje(400, d.getMessage());
@@ -123,8 +130,12 @@ public class CategoriaController {
 	public Mensaje delete(@PathVariable("id") String id) {
 		try {
 			int idS = Integer.parseInt(id);
-			cDao.deleteById(idS);
-			return new Mensaje(200, "Registro eliminado");
+			if (sDao.existsById(idS)) {
+				cDao.deleteById(idS);
+				return new Mensaje(200, "Registro eliminado");
+			} else {
+				return new Mensaje(400, ErrorMessages.PROERR_004);
+			}
 		} catch (NumberFormatException e) {
 			return new Mensaje(400, ErrorMessages.PROERR_001);
 		}

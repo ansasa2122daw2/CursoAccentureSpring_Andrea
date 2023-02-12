@@ -14,7 +14,7 @@ import es.rf.tienda.exception.DomainException;
 
 public interface IServicioCategoria{
 
-	public void insert(Categoria t) throws DomainException;
+	public void insert(Categoria t) throws DomainException, DAOException;
 	public boolean update(Categoria t) throws DomainException;
 	public boolean deleteById(int s);
 	public List<Categoria> listAll();

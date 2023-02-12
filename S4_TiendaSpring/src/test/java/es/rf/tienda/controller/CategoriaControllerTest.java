@@ -50,6 +50,10 @@ class CategoriaControllerTest {
 	
 	private static final String BORRADO = "SUCCES";
 
+	/**
+	 * Test para leer uno
+	 * @throws DomainException
+	 */
 	@Test
 	void testLeerUno() throws DomainException {
 		Categoria cat = new Categoria();
@@ -62,6 +66,9 @@ class CategoriaControllerTest {
 		assertEquals(CDESC, cat.getCat_descripcion());
 	}
 	
+	/**
+	 * Test para leer todos usando mockito
+	 */
 	@Test
 	void testLeerTodos() {
 		List<Categoria> list = new ArrayList<Categoria>();
@@ -75,13 +82,15 @@ class CategoriaControllerTest {
 
 		when(cCat.leerTodos()).thenReturn(list);
 
-		//test
 		List<Categoria> empList = cCat.leerTodos();
 
 		assertEquals(3, empList.size());
 		verify(cCat, times(1)).leerTodos();
 	}
 
+	/**
+	 * Test con delete usando mockito delete
+	 */
 	@Test
 	void testDelete() {
 		Categoria cat1 = new Categoria(IDC,CNOMBRE,CDESC);
@@ -91,28 +100,31 @@ class CategoriaControllerTest {
 		String conver = Integer.toString(IDCAT);
 		
 		when(cCat.delete(conver)).thenReturn(err);
-		Mensaje men = cCat.delete(conver);
-		assertEquals(men,cat1);
+		assertEquals(cCat.delete(conver),err);
 	}
 
+	/**
+	 * test Alta usando when con mockito
+	 */
 	@Test
 	void testAlta() {
 		Categoria cat1 = new Categoria(IDC,CNOMBRE,CDESC);
 		Mensaje mensaje = new Mensaje(COERR, MENERR);
 		
 		when(cCat.alta(cat1)).thenReturn(mensaje);
-		Mensaje men = cCat.alta(cat1);
-		assertEquals(men,cat1);
+		assertEquals(cCat.alta(cat1),mensaje);
 	}
 
+	/**
+	 * Test modificacion con when de mockito
+	 */
 	@Test
 	void testModificacion() {
 		Categoria cat1 = new Categoria(IDC,CNOMBRE,CDESC);
 		Mensaje mensaje = new Mensaje(COERR, MENERR);
 		
 		when(cCat.modificacion(cat1)).thenReturn(mensaje);
-		Mensaje men = cCat.modificacion(cat1);
-		assertEquals(men,cat1);
+		assertEquals(cCat.modificacion(cat1),mensaje);
 	}
 
 }

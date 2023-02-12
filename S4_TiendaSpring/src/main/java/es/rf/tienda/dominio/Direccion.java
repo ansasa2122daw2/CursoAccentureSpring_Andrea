@@ -20,7 +20,7 @@ public class Direccion {
 	private String dir_nombre;		//Nombre
 	private String dir_direccion;	//Direccion
 	private String dir_poblacion;	//Poblacion
-	private String dir_cPostal;			//Codigo postal
+	private String dir_cPostal;		//Codigo postal
 	private String dir_provincia;	//Provincia
 	private String dir_pais;		//Pais
 	@Id

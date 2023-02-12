@@ -38,6 +38,11 @@ public class ErrorMessages {
 	 */
 	public static final String BORRADO = "SUCCES";
 	
+	/**
+	 * Campo erroneo
+	 */
+	public static final String PROERR_005 = "Campo erroneo";
+	
 
 
 }
