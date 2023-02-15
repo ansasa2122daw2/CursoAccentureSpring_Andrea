@@ -31,9 +31,10 @@ public class ServicioCategoria implements IServicioCategoria {
 	}
 
 	@Override
-	public boolean update(Categoria t) {
-		cDao.save(t);
-		return true;
+	public void update(Categoria t) {
+		if(t.isValidUpdate()) {
+			cDao.save(t);
+		}
 	}
 
 	@Override

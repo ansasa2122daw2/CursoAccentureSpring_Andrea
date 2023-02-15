@@ -1,6 +1,7 @@
 package es.rf.tienda.controller;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -8,12 +9,15 @@ import java.util.NoSuchElementException;
 import org.hibernate.sql.results.DomainResultCreationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.support.DomainClassConverter;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import es.rf.tienda.dao.ICategoriaRepo;
 import es.rf.tienda.dominio.Categoria;
+import es.rf.tienda.exception.ControllerException;
 import es.rf.tienda.exception.DAOException;
 import es.rf.tienda.exception.DomainException;
+import es.rf.tienda.exception.RestRespondeEntityExceptionHandler;
 import es.rf.tienda.service.IServicioCategoria;
 import es.rf.tienda.service.ServicioCategoria;
 import es.rf.tienda.util.ErrorMessages;
@@ -95,11 +99,12 @@ public class CategoriaController {
 	 * 
 	 * @param c
 	 * @return
+	 * @throws DAOException 
 	 */
 	@PutMapping
 	public Mensaje modificacion(@RequestBody Categoria c) {
 		try {
-			if(c.isValidUpdate() && sDao.existsById(c.getId_categoria())) {
+			if(c.isValidUpdate()) {
 				cDao.update(c);
 				return new Mensaje(200, "Registro modificado");
 			}else {
@@ -107,6 +112,8 @@ public class CategoriaController {
 			}
 		} catch (DomainException d) {
 			return new Mensaje(400, d.getMessage());
+		} catch (DAOException e) {
+			return new Mensaje(400, e.getMessage());
 		}
 	}
 
