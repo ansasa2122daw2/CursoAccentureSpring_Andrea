@@ -5,17 +5,23 @@ import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @ControllerAdvice
+@CrossOrigin
 public class RestRespondeEntityExceptionHandler {
+	
+	String MI_RUTA = "es.rf.tienda";
+	int MI_RUTA_LENGTH = MI_RUTA.length();
 	
 	@ExceptionHandler(value = { 
 			DomainException.class,
 			DAOException.class,
 			ControllerException.class,
-			IllegalArgumentException.class,
+			IllegalArgumentException.class, 
+			IllegalStateException.class, 
 			org.springframework.dao.DuplicateKeyException.class,
 			org.springframework.web.HttpRequestMethodNotSupportedException.class,
 			org.springframework.web.bind.MethodArgumentNotValidException.class,
@@ -27,7 +33,7 @@ public class RestRespondeEntityExceptionHandler {
 	
 	@ResponseBody
 	public Map<String, Object> handleConflict(Exception ex) {
-		String mensaje = ex.getClass().getCanonicalName() + "-" + ex.getMessage();
+		String mensaje = ex.getClass().getSimpleName() + "-" + ex.getMessage();
 		System.out.println(mensaje);
 		return montaError(ex, mensaje, HttpStatus.BAD_REQUEST);
 	}

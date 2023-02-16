@@ -9,6 +9,7 @@ import java.util.NoSuchElementException;
 import org.hibernate.sql.results.DomainResultCreationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.support.DomainClassConverter;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +18,7 @@ import es.rf.tienda.dominio.Categoria;
 import es.rf.tienda.exception.ControllerException;
 import es.rf.tienda.exception.DAOException;
 import es.rf.tienda.exception.DomainException;
+import es.rf.tienda.exception.ErrorRestResponse;
 import es.rf.tienda.exception.RestRespondeEntityExceptionHandler;
 import es.rf.tienda.service.IServicioCategoria;
 import es.rf.tienda.service.ServicioCategoria;
@@ -29,8 +31,15 @@ import es.rf.tienda.util.Mensaje;
  * @author andrea.sanclemente
  *
  */
-
+/**
+ * GET Devolver ResponseEntity siempre respondes con eso
+ * tener un status
+ * metodo que devuleva responseentity
+ * @author andrea.sanclemente
+ *
+ */
 @RestController
+@CrossOrigin
 @RequestMapping("/categorias")
 public class CategoriaController {
 
@@ -49,7 +58,7 @@ public class CategoriaController {
 	 * @param id
 	 * @return
 	 */
-	@GetMapping("/{id}")
+	/*@GetMapping("/{id}")
 	public Mensaje leerUno(@PathVariable("id") String id) {
 		try {
 			int idS = Integer.parseInt(id);
@@ -67,6 +76,31 @@ public class CategoriaController {
 			return new Mensaje(400, ErrorMessages.PROERR_001);
 		}
 
+	}*/
+	
+	@GetMapping("/{id}")
+	public ResponseEntity leerUno(@PathVariable("id") String id) throws ControllerException{
+		String mensaje="";
+		Map<String,Object> map = new LinkedHashMap<String,Object>();
+		try {
+			int idS = Integer.parseInt(id);
+			try {
+				Categoria c = cDao.leerUno(idS);
+				if (c == null) {
+					mensaje = "No existen datos";
+				} else {
+					map.put("status", 1);
+					map.put("data", c);
+					return new ResponseEntity<>(map, HttpStatus.OK);
+				}
+			} catch (NoSuchElementException e) {
+				mensaje= "ID no encontrado";
+			}
+		} catch (NumberFormatException e) {
+			mensaje = "ID formato erroneo";
+		}
+		throw new ControllerException(mensaje);
+
 	}
 
 	/**
@@ -77,7 +111,7 @@ public class CategoriaController {
 	 * @throws DAOException
 	 */
 	@PostMapping
-	public Mensaje alta(@RequestBody Categoria c) {
+	public Mensaje alta(@RequestBody Categoria c){
 		try {
 			c.setId_categoria(0);
 			if (c.isValidInsert()) {
@@ -91,7 +125,6 @@ public class CategoriaController {
 		} catch (DAOException e) {
 			return new Mensaje(400, e.getMessage());
 		}
-
 	}
 
 	/**
@@ -117,6 +150,7 @@ public class CategoriaController {
 		}
 	}
 
+
 	/**
 	 * Método listar todos
 	 * 
@@ -133,7 +167,7 @@ public class CategoriaController {
 	 * @param id
 	 * @return
 	 */
-	@DeleteMapping("/{id}")
+	/*@DeleteMapping("/{id}")
 	public Mensaje delete(@PathVariable("id") String id) {
 		try {
 			int idS = Integer.parseInt(id);
@@ -146,6 +180,23 @@ public class CategoriaController {
 		} catch (NumberFormatException e) {
 			return new Mensaje(400, ErrorMessages.PROERR_001);
 		}
+	}*/
+	@DeleteMapping("/{id}")
+	public ResponseEntity delete(@PathVariable("id") String id) throws ControllerException{
+		String mensaje="";
+		Map<String,Object> map = new LinkedHashMap<String,Object>();
+		try {
+			int idS = Integer.parseInt(id);
+			if (sDao.existsById(idS)) {
+				cDao.deleteById(idS);
+				return new ResponseEntity<>(map, HttpStatus.OK);
+			} else {
+				mensaje = "No existe ese ID que deseas eliminar";
+			}
+		} catch (NumberFormatException e) {
+			mensaje= "Formato ID erroneo";
+		}
+		throw new ControllerException(mensaje);
 	}
 
 }
