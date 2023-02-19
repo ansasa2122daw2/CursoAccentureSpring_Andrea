@@ -24,7 +24,7 @@ public class Categoria implements Modelo{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.TABLE)
-	//@OneToMany(targetEntity = Producto.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+
 	private int id_categoria;			//identificador categoria
 	
 	@Column(nullable=false)

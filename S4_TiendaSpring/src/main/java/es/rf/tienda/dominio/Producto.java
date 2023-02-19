@@ -44,8 +44,8 @@ public class Producto {
 	
 	private int id_pais;					//Pais de origen
 	private String pro_usoRecomendado;		//Uso recomendado
-	//@ManyToOne(targetEntity = Categoria.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	//@JoinColumn(name = "id_categoria") seria poner Categoria id_categoria abajo
+	@ManyToOne(targetEntity = Categoria.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinColumn(name = "id_categoria") 
 	private int id_categoria;				//Categoria
 	private int pro_stkReservado;			//Stock reservado
 	private int pro_nStkAlto;				//stock para nivel alto
@@ -412,5 +412,6 @@ public class Producto {
 				+ id_categoria + ", pro_stkReservado=" + pro_stkReservado + ", pro_nStkAlto=" + pro_nStkAlto
 				+ ", pro_nStkBajo=" + pro_nStkBajo + ", pro_stat=" + pro_stat + "]";
 	}
+
 
 }

@@ -181,6 +181,7 @@ public class CategoriaController {
 			return new Mensaje(400, ErrorMessages.PROERR_001);
 		}
 	}*/
+	@CrossOrigin
 	@DeleteMapping("/{id}")
 	public ResponseEntity delete(@PathVariable("id") String id) throws ControllerException{
 		String mensaje="";
